@@ -1,13 +1,26 @@
 import socket
 
 HOST = "127.0.0.1"
-PORT = 12345
+PORT = 65531
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect((HOST, PORT))
+def initialize():
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    return client_socket;
 
-client_socket.send(b"Hello world")
+def connect(client_socket, host, port):
+    client_socket.connect((host, port))
 
-data = client_socket.recv(1024)
+def send_data(client_socket):
+    data = client_socket.send(b"Hello")
 
-print(f"Recieved {data!r}")
+def recieve_data(client_socket):
+    result = client_socket.recv(1024)
+
+
+
+if __name__ == "__main__":
+    client_socket = initialize()
+    connect(client_socket, HOST, PORT)
+    send_data(client_socket)
+    recieve_data(client_socket)
+    client_socket.close()
